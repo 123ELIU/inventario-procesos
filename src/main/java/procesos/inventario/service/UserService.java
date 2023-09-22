@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import procesos.inventario.model.User;
 import procesos.inventario.repositorio.UserRepository;
 
+import java.util.List;
+
 @Service
 
 public class UserService {
@@ -23,6 +25,7 @@ public class UserService {
     public User updateUser(User user, Long id) {
         if (userRepository.existsById(id)) {
             User userBd = userRepository.findById(id).get();
+            userBd.setFirstName(user.getFirstName());
             userBd.setLastName(user.getLastName());
             userBd.setAddress(user.getAddress());
             userBd.setDocument(user.getDocument());
@@ -40,6 +43,9 @@ public class UserService {
             return true;
         }
         return false;
+    }
+    public List<User>findAllUsers(){
+        return(List<User>) userRepository.findAll();
     }
 }
 

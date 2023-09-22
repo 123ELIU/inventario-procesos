@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 @Entity
 @Data
-@AllArgsConstructor
+
 
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
