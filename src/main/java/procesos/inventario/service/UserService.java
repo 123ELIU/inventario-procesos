@@ -2,10 +2,13 @@ package procesos.inventario.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import procesos.inventario.exceptions.NotFoundException;
 import procesos.inventario.model.User;
 import procesos.inventario.repositorio.UserRepository;
 
+
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -18,10 +21,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUserById(Long id) {
-        return userRepository.findById(id).get();
+    public User getUserById(Long id){
+        if( id==0){
+            throw  new NotFoundException("User id is null");
+        }
+        Optional<User> user = userRepository.findById(id);
+        if(user.isEmpty()){
+            throw  new NotFoundException("User not found");
+        }
+        return  user.get();
     }
-
     public User updateUser(User user, Long id) {
         if (userRepository.existsById(id)) {
             User userBd = userRepository.findById(id).get();
